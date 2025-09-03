@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home | Discord Login</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to My Website</h1>
+    <% if (user) { %>
+      <p>You are logged in as <strong><%= user.username %></strong></p>
+      <a href="/profile">Go to Profile</a> | 
+      <a href="/auth/logout">Logout</a>
+    <% } else { %>
+      <a href="/auth/discord" class="btn">Login with Discord</a>
+    <% } %>
+  </div>
+</body>
+</html>

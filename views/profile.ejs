@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile | Discord Login</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Your Profile</h1>
+    <% if (user) { %>
+      <img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png" width="120" class="avatar"/>
+      <h2><%= user.username %></h2>
+      <p><strong>Email:</strong> <%= user.email %></p>
+      <a href="/">Home</a> | 
+      <a href="/auth/logout">Logout</a>
+    <% } else { %>
+      <p>You are not logged in.</p>
+      <a href="/">Go Home</a>
+    <% } %>
+  </div>
+</body>
+</html>
