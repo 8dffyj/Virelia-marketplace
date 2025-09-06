@@ -1,0 +1,62 @@
+[
+  {
+    "id": "sub_1day",
+    "profile_image": "https://cdn.discordapp.com/attachments/1404364069351460967/1413848167824232518/vireeeee.png",
+    "title": "1 Day Access",
+    "description": "Enjoy premium features for 24 hours",
+    "price_vv": 0.23,
+    "discount": { "type": "percent", "value": 0 },
+    "days": 1,
+    "role_id": "1412700215550414858"
+  },
+  {
+    "id": "sub_7days",
+    "profile_image": "https://cdn.discordapp.com/attachments/1404364069351460967/1413848167824232518/vireeeee.png",
+    "title": "7-Day Pass",
+    "description": "1 week of premium access",
+    "price_vv": 0.65,
+    "discount": { "type": "percent", "value": 0 },
+    "days": 7,
+    "role_id": "1412700215550414858"
+  },
+  {
+    "id": "sub_30days",
+    "profile_image": "https://cdn.discordapp.com/attachments/example/30days.png",
+    "title": "Monthly Plan",
+    "description": "30 days of premium access",
+    "price_vv": 1.00,
+    "discount": { "type": "percent", "value": 0 },
+    "days": 30,
+    "role_id": "1412700215550414858"
+  },
+  {
+    "id": "sub_60days",
+    "profile_image": "https://cdn.discordapp.com/attachments/example/60days.png",
+    "title": "Bi-Monthly Plan",
+    "description": "60 days of premium access (~5% off vs monthly)",
+    "price_vv": 2.00,
+    "discount": { "type": "percent", "value": 5 },
+    "days": 60,
+    "role_id": "1412700215550414858"
+  },
+  {
+    "id": "sub_90days",
+    "profile_image": "https://cdn.discordapp.com/attachments/example/90days.png",
+    "title": "Quarterly Plan",
+    "description": "90 days of premium access (~10% off vs monthly)",
+    "price_vv": 3.00,
+    "discount": { "type": "percent", "value": 10 },
+    "days": 90,
+    "role_id": "1412700215550414858"
+  },
+  {
+    "id": "sub_120days",
+    "profile_image": "https://cdn.discordapp.com/attachments/example/120days.png",
+    "title": "4-Month Plan",
+    "description": "120 days of premium access (~11.5% off vs monthly)",
+    "price_vv": 4.00,
+    "discount": { "type": "percent", "value": 11.5 },
+    "days": 120,
+    "role_id": "1412700215550414858"
+  }
+]

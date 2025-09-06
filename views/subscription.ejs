@@ -1,0 +1,444 @@
+<!-- views/subscription.ejs (Enhanced with decimal precision support) -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Subscription Plans | Virelia</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .subscription-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .balance-info {
+      background: #f8f9fa;
+      border: 2px solid #007bff;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    
+    .balance-amount {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #007bff;
+      font-family: 'Courier New', monospace; /* Monospace for better decimal alignment */
+    }
+    
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+    
+    .plan-card {
+      background: white;
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      padding: 25px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .plan-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      border-color: #007bff;
+    }
+    
+    .plan-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      display: block;
+      object-fit: cover;
+    }
+    
+    .plan-title {
+      font-size: 1.4em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: center;
+      color: #2c3e50;
+    }
+    
+    .plan-description {
+      color: #6c757d;
+      margin-bottom: 20px;
+      text-align: center;
+      line-height: 1.5;
+    }
+    
+    .pricing-section {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .original-price {
+      text-decoration: line-through;
+      color: #6c757d;
+      font-size: 0.9em;
+      font-family: 'Courier New', monospace;
+    }
+    
+    .final-price {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #28a745;
+      margin: 5px 0;
+      font-family: 'Courier New', monospace; /* Monospace for decimal alignment */
+    }
+    
+    .price-unit {
+      font-size: 0.7em;
+      color: #6c757d;
+      font-weight: normal;
+    }
+    
+    .discount-badge {
+      background: #dc3545;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.8em;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }
+    
+    .duration {
+      background: #e9ecef;
+      color: #495057;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 0.9em;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+    
+    .purchase-btn {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .purchase-btn:hover:not(:disabled) {
+      background: #0056b3;
+    }
+    
+    .purchase-btn:disabled {
+      background: #6c757d;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    
+    .loading {
+      display: none;
+      margin-top: 10px;
+      text-align: center;
+      color: #007bff;
+    }
+    
+    .insufficient-funds {
+      background: #f8d7da;
+      border-color: #dc3545;
+    }
+    
+    .insufficient-funds .purchase-btn {
+      background: #dc3545;
+    }
+    
+    .nav-links {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .nav-links a {
+      margin: 0 15px;
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .balance-breakdown {
+      font-size: 0.9em;
+      color: #6c757d;
+      margin-top: 5px;
+    }
+
+    .decimal-highlight {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: bold;
+    }
+
+    .price-comparison {
+      margin-top: 10px;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: 6px;
+      font-size: 0.85em;
+    }
+
+    .savings-info {
+      color: #28a745;
+      font-weight: 600;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="subscription-container">
+    <h1>Subscription Plans</h1>
+    
+    <div class="nav-links">
+      <a href="/">Home</a> |
+      <a href="/profile">Profile</a> |
+      <a href="/auth/logout">Logout</a>
+    </div>
+    
+    <div class="balance-info">
+      <h3>Your VV Balance</h3>
+      <div class="balance-amount">
+        <span class="decimal-highlight"><%
+          // Format balance with proper decimals
+          let formattedBalance;
+          if (user.vv_balance < 1 && user.vv_balance > 0) {
+            formattedBalance = parseFloat(user.vv_balance).toFixed(8).replace(/\.?0+$/, '');
+          } else if (user.vv_balance >= 1000) {
+            formattedBalance = user.vv_balance.toLocaleString('en-US', {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 8
+            });
+          } else {
+            formattedBalance = parseFloat(user.vv_balance).toFixed(6).replace(/\.?0+$/, '');
+          }
+        %><%= formattedBalance %></span> 
+        <span class="price-unit">VV</span>
+      </div>
+      <div class="balance-breakdown">
+        <% if (user.vv_balance < 1 && user.vv_balance > 0) { %>
+          Micro balance • Perfect for small transactions
+        <% } else if (user.vv_balance >= 1000) { %>
+          Premium balance • <%= (user.vv_balance / 1000).toFixed(1) %>K VV available
+        <% } else { %>
+          Standard balance • Ready for purchases
+        <% } %>
+      </div>
+    </div>
+    
+    <div class="plans-grid">
+      <% plans.forEach(plan => { 
+        // Calculate formatted prices
+        let finalPriceFormatted, originalPriceFormatted;
+        
+        if (plan.final_price < 1 && plan.final_price > 0) {
+          finalPriceFormatted = parseFloat(plan.final_price).toFixed(8).replace(/\.?0+$/, '');
+        } else {
+          finalPriceFormatted = parseFloat(plan.final_price).toFixed(6).replace(/\.?0+$/, '');
+        }
+        
+        if (plan.price_vv < 1 && plan.price_vv > 0) {
+          originalPriceFormatted = parseFloat(plan.price_vv).toFixed(8).replace(/\.?0+$/, '');
+        } else {
+          originalPriceFormatted = parseFloat(plan.price_vv).toFixed(6).replace(/\.?0+$/, '');
+        }
+
+        const isAffordable = user.vv_balance >= plan.final_price;
+      %>
+        <div class="plan-card <%= !isAffordable ? 'insufficient-funds' : '' %>">
+          <% if (plan.discount_amount > 0) { %>
+            <div class="discount-badge">
+              <% if (plan.discount.type === 'percent') { %>
+                <%= plan.discount.value %>% OFF
+              <% } else { %>
+                <%= parseFloat(plan.discount_amount).toFixed(6).replace(/\.?0+$/, '') %> VV OFF
+              <% } %>
+            </div>
+          <% } %>
+          
+          <img src="<%= plan.profile_image %>" alt="<%= plan.title %>" class="plan-image" onerror="this.src='/default-plan.png'">
+          
+          <div class="plan-title"><%= plan.title %></div>
+          <div class="plan-description"><%= plan.description %></div>
+          
+          <div class="duration"><%= plan.duration_text %></div>
+          
+          <div class="pricing-section">
+            <% if (plan.discount_amount > 0) { %>
+              <div class="original-price"><%= originalPriceFormatted %> <span class="price-unit">VV</span></div>
+            <% } %>
+            <div class="final-price">
+              <span class="decimal-highlight"><%= finalPriceFormatted %></span> 
+              <span class="price-unit">VV</span>
+            </div>
+            
+            <% if (plan.discount_amount > 0) { %>
+              <div class="savings-info">
+                Save <%= parseFloat(plan.discount_amount).toFixed(8).replace(/\.?0+$/, '') %> VV!
+              </div>
+            <% } %>
+          </div>
+
+          <div class="price-comparison">
+            <% if (plan.final_price < 0.001) { %>
+              <strong>Micro-transaction:</strong> Ultra low cost
+            <% } else if (plan.final_price < 0.01) { %>
+              <strong>Mini Plan:</strong> Great for trying out
+            <% } else if (plan.final_price >= 1) { %>
+              <strong>Premium Plan:</strong> Best value for extended use
+            <% } else { %>
+              <strong>Standard Plan:</strong> Perfect balance of cost and duration
+            <% } %>
+            
+            <% if (plan.days > 1) { %>
+              <br>Cost per day: <strong><%= (plan.final_price / plan.days).toFixed(8).replace(/\.?0+$/, '') %> VV</strong>
+            <% } %>
+          </div>
+          
+          <button class="purchase-btn" 
+                  onclick="purchasePlan('<%= plan.id %>', this)"
+                  <%= !isAffordable ? 'disabled' : '' %>>
+            <% if (!isAffordable) { %>
+              Insufficient Funds (Need <%= (plan.final_price - user.vv_balance).toFixed(8).replace(/\.?0+$/, '') %> more VV)
+            <% } else { %>
+              Purchase for <%= finalPriceFormatted %> VV
+            <% } %>
+          </button>
+          
+          <div class="loading">Processing purchase...</div>
+        </div>
+      <% }); %>
+    </div>
+
+    <div style="margin-top: 40px; text-align: center; color: #6c757d; font-size: 0.9em;">
+      <p><strong>About VV Pricing:</strong></p>
+      <p>Our VV (Virelia Virtual) currency supports high-precision decimal transactions.<br>
+      This allows for micro-payments and flexible pricing options for all users.</p>
+    </div>
+  </div>
+  
+  <script>
+    function generateIdempotencyKey() {
+      return 'idem_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+    
+    // Enhanced formatting function for client-side
+    function formatVV(amount, maxDecimals = 8) {
+      if (typeof amount !== 'number') {
+        amount = parseFloat(amount) || 0;
+      }
+      
+      if (amount < 1 && amount > 0) {
+        return amount.toFixed(maxDecimals).replace(/\.?0+$/, '');
+      } else if (amount >= 1000) {
+        return amount.toLocaleString('en-US', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: maxDecimals
+        });
+      } else {
+        return amount.toFixed(6).replace(/\.?0+$/, '');
+      }
+    }
+    
+    async function purchasePlan(planId, button) {
+      if (button.disabled) return;
+      
+      // Disable button and show loading
+      button.disabled = true;
+      const originalText = button.textContent;
+      button.textContent = 'Processing...';
+      const loadingDiv = button.nextElementSibling;
+      loadingDiv.style.display = 'block';
+      
+      try {
+        const response = await fetch('/minecraft/subscription/purchase', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Idempotency-Key': generateIdempotencyKey()
+          },
+          body: JSON.stringify({ plan_id: planId })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          // Show success message with formatted amounts
+          const finalPriceFormatted = formatVV(result.final_price);
+          alert(`Subscription purchased successfully for ${finalPriceFormatted} VV! You will receive your role shortly.`);
+          
+          // Reload page to update balance
+          window.location.reload();
+        } else {
+          throw new Error(result.error || 'Purchase failed');
+        }
+      } catch (error) {
+        console.error('Purchase error:', error);
+        alert('Purchase failed: ' + error.message);
+        
+        // Re-enable button
+        button.disabled = false;
+        button.textContent = originalText;
+        loadingDiv.style.display = 'none';
+      }
+    }
+    
+    // Prevent double-clicks and add enhanced UX
+    document.addEventListener('DOMContentLoaded', function() {
+      const buttons = document.querySelectorAll('.purchase-btn');
+      buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          if (this.disabled) {
+            e.preventDefault();
+            return false;
+          }
+        });
+      });
+
+      // Add hover effects for price displays
+      const priceElements = document.querySelectorAll('.final-price');
+      priceElements.forEach(price => {
+        price.addEventListener('mouseenter', function() {
+          this.style.transform = 'scale(1.05)';
+          this.style.transition = 'transform 0.2s ease';
+        });
+        
+        price.addEventListener('mouseleave', function() {
+          this.style.transform = 'scale(1)';
+        });
+      });
+    });
+
+    // Add copy-to-clipboard functionality for balance
+    document.querySelector('.balance-amount').addEventListener('click', function() {
+      const balanceText = this.textContent.replace(' VV', '');
+      navigator.clipboard.writeText(balanceText).then(function() {
+        const originalBg = document.querySelector('.balance-info').style.backgroundColor;
+        document.querySelector('.balance-info').style.backgroundColor = '#d4edda';
+        setTimeout(function() {
+          document.querySelector('.balance-info').style.backgroundColor = originalBg;
+        }, 1000);
+      });
+    });
+  </script>
+</body>
+</html>

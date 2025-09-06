@@ -1,0 +1,87 @@
+<!-- views/error.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Server Error | Virelia</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .error-container {
+      text-align: center;
+      padding: 50px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .error-code {
+      font-size: 4em;
+      font-weight: bold;
+      color: #dc3545;
+      margin-bottom: 20px;
+    }
+    .error-message {
+      font-size: 1.2em;
+      color: #6c757d;
+      margin-bottom: 30px;
+    }
+    .error-details {
+      background: #f8f9fa;
+      border-left: 4px solid #dc3545;
+      padding: 20px;
+      text-align: left;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    .error-stack {
+      background: #2d3748;
+      color: #e2e8f0;
+      padding: 15px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+    .error-actions {
+      margin-top: 30px;
+    }
+    .error-actions a {
+      display: inline-block;
+      background: #007bff;
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 6px;
+      margin: 0 10px;
+      font-weight: 500;
+    }
+    .error-actions a:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="error-container">
+      <div class="error-code">500</div>
+      <h1><%= title || 'Server Error' %></h1>
+      <p class="error-message">
+        <%= message || 'Something went wrong on our end. Please try again later.' %>
+      </p>
+      
+      <% if (error && error.stack) { %>
+        <div class="error-details">
+          <h3>Error Details:</h3>
+          <div class="error-stack"><%= error.stack %></div>
+        </div>
+      <% } %>
+      
+      <div class="error-actions">
+        <a href="/" onclick="window.location.reload(); return false;">Retry</a>
+        <a href="/">Go Home</a>
+        <% if (typeof user !== 'undefined' && user) { %>
+          <a href="/profile">View Profile</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

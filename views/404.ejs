@@ -1,0 +1,62 @@
+<!-- views/404.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>404 - Page Not Found | Virelia</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .error-container {
+      text-align: center;
+      padding: 50px 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .error-code {
+      font-size: 6em;
+      font-weight: bold;
+      color: #dc3545;
+      margin-bottom: 20px;
+    }
+    .error-message {
+      font-size: 1.2em;
+      color: #6c757d;
+      margin-bottom: 30px;
+    }
+    .error-actions {
+      margin-top: 30px;
+    }
+    .error-actions a {
+      display: inline-block;
+      background: #007bff;
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 6px;
+      margin: 0 10px;
+      font-weight: 500;
+    }
+    .error-actions a:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="error-container">
+      <div class="error-code">404</div>
+      <h1><%= title || 'Page Not Found' %></h1>
+      <p class="error-message">
+        <%= message || "The page you're looking for doesn't exist." %>
+      </p>
+      
+      <div class="error-actions">
+        <a href="/">Go Home</a>
+        <% if (typeof user !== 'undefined' && user) { %>
+          <a href="/profile">View Profile</a>
+          <a href="/minecraft/subscription">View Plans</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
