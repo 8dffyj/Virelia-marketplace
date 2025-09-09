@@ -1,36 +1,14 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #2c2f33;
-  color: #fff;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  margin-top: 50px;
-}
-
-a {
-  color: #7289da;
-  text-decoration: none;
-  margin: 10px;
-}
-
-a.btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background: #7289da;
-  color: #fff;
-  border-radius: 5px;
-  transition: 0.2s;
-}
-
-a.btn:hover {
-  background: #5b6eae;
-}
-
-.avatar {
-  border-radius: 50%;
-  margin: 20px 0;
+:root {
+  --primary-color: #FF9C00;
+  --secondary-color: #FFD84A;
+  --accent-color: #FF7700;
+  --dark-bg: #000000;
+  --darker-bg: #000000;
+  --card-bg: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --neon-orange: #FF9C00;
+  --minecraft-brown: #8b4513;
+  --minecraft-stone: #7f7f7f;
+  --gradient-primary: linear-gradient(45deg, #FFD84A, #FF9C00);
 }
