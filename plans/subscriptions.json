@@ -7,7 +7,7 @@
     "price_vv": 0.23,
     "discount": { "type": "percent", "value": 0 },
     "days": 1,
-    "role_id": "1412700215550414858"
+    "role_id": "1404725574341230683"
   },
   {
     "id": "sub_7days",
@@ -17,7 +17,7 @@
     "price_vv": 0.65,
     "discount": { "type": "percent", "value": 0 },
     "days": 7,
-    "role_id": "1412700215550414858"
+    "role_id": "1404725574341230683"
   },
   {
     "id": "sub_30days",
@@ -27,7 +27,7 @@
     "price_vv": 1.00,
     "discount": { "type": "percent", "value": 0 },
     "days": 30,
-    "role_id": "1412700215550414858"
+    "role_id": "1404725574341230683"
   },
   {
     "id": "sub_60days",
@@ -37,7 +37,7 @@
     "price_vv": 2.00,
     "discount": { "type": "percent", "value": 5 },
     "days": 60,
-    "role_id": "1412700215550414858"
+    "role_id": "1404725574341230683"
   },
   {
     "id": "sub_90days",
@@ -47,7 +47,7 @@
     "price_vv": 3.00,
     "discount": { "type": "percent", "value": 10 },
     "days": 90,
-    "role_id": "1412700215550414858"
+    "role_id": "1404725574341230683"
   },
   {
     "id": "sub_120days",
@@ -57,6 +57,6 @@
     "price_vv": 4.00,
     "discount": { "type": "percent", "value": 11.5 },
     "days": 120,
-    "role_id": "1412700215550414858"
+    "role_id": "1404725574341230683"
   }
 ]
