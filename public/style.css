@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 :root {
   --primary-color: #FF9C00;
   --secondary-color: #FFD84A;
@@ -11,4 +17,10 @@
   --minecraft-brown: #8b4513;
   --minecraft-stone: #7f7f7f;
   --gradient-primary: linear-gradient(45deg, #FFD84A, #FF9C00);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }

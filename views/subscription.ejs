@@ -42,7 +42,7 @@
   <!-- Main Content -->
   <main class="main-content">
     <div class="subscription-container">
-      <h1> </h1>
+      <h1></h1>
       <h1>Subscription Plans</h1>
       
       <div class="balance-info">
@@ -159,17 +159,9 @@
         <% }); %>
       </div>
 
-      <div class="vv-info">
-        <h3>About VV Pricing</h3>
-        <p>Our VV (Virelia Virtual) currency supports high-precision decimal transactions.<br>
-        This allows for micro-payments and flexible pricing options for all users.</p>
-      </div>
-    </div>
-  </main>
-
   <!-- Footer -->
+    <%- include('partials/footer') %>
 
-  
   <script>
     function generateIdempotencyKey() {
       return 'idem_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
