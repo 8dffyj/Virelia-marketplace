@@ -325,3 +325,46 @@ startServer().catch(error => {
   console.error('[ERROR] Failed to start application:', error);
   process.exit(1);
 });
+
+// Add this to your existing app.js after line 46 (after static files middleware)
+
+// Serve static files (your existing line)
+app.use(express.static(path.join(__dirname, "public")));
+
+// Security headers middleware (add this)
+app.use((req, res, next) => {
+  // Prevent page from being embedded in frames (clickjacking protection)
+  res.setHeader('X-Frame-Options', 'DENY');
+  
+  // Prevent MIME type sniffing
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  
+  // Enable XSS protection
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  
+  // Content Security Policy (basic)
+  res.setHeader('Content-Security-Policy', 
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; " +
+    "style-src 'self' 'unsafe-inline'; " +
+    "img-src 'self' data: https:; " +
+    "font-src 'self' https:; " +
+    "connect-src 'self';"
+  );
+  
+  next();
+});
+
+// Middleware to add protection flag to sensitive routes
+const protectSensitiveRoutes = (req, res, next) => {
+  // Add protection flag for sensitive pages
+  const sensitiveRoutes = ['/profile', '/minecraft/subscription', '/admin'];
+  
+  if (sensitiveRoutes.some(route => req.path.startsWith(route))) {
+    res.locals.protectInspect = true;
+  }
+  
+  next();
+};
+
+app.use(protectSensitiveRoutes);

@@ -162,6 +162,8 @@
   <!-- Footer -->
     <%- include('partials/footer') %>
 
+     <!-- Load protection script at the end of body -->
+    <script src="/js/inspect-protection.js"></script>
   <script>
     function generateIdempotencyKey() {
       return 'idem_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
