@@ -204,7 +204,8 @@ h1 {
   border-radius: 20px;
   font-size: 0.9em;
   font-weight: 500;
-  display: inline-block;
+  display: flex;
+  justify-content: center; /* centers horizontally */
   margin-bottom: 1rem;
   border: 1px solid #ff9c00;
 }
