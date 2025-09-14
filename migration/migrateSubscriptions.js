@@ -89,7 +89,7 @@ async function migrateSubscriptions() {
     
     console.log(`\nInitializing VV balance for ${usersWithoutBalance.length} users...`);
     
-    const defaultBalance = parseInt(process.env.DEFAULT_VV_BALANCE) || 500;
+    const defaultBalance = parseInt(process.env.DEFAULT_VV_BALANCE) || 0.00;
     let balanceInitCount = 0;
     
     for (const user of usersWithoutBalance) {

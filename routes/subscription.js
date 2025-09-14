@@ -42,7 +42,7 @@ router.get('/minecraft/subscription', requireAuth, async (req, res) => {
     let userBalance = parseFloat(user.vv_balance || 0);
     if (user.vv_balance === undefined || user.vv_balance === null) {
       // Initialize balance if it doesn't exist (use decimal default)
-      const defaultBalance = parseFloat(process.env.DEFAULT_VV_BALANCE) || 500.0;
+      const defaultBalance = parseFloat(process.env.DEFAULT_VV_BALANCE) || 0.00;
       await db.collection('users').updateOne(
         { _id: user._id },
         { $set: { vv_balance: defaultBalance, updated_at: new Date() } }
@@ -134,7 +134,7 @@ router.get('/profile', requireAuth, async (req, res) => {
     // Ensure user has balance (handle as decimal)
     let userBalance = parseFloat(user.vv_balance || 0);
     if (user.vv_balance === undefined || user.vv_balance === null) {
-      const defaultBalance = parseFloat(process.env.DEFAULT_VV_BALANCE) || 500.0;
+      const defaultBalance = parseFloat(process.env.DEFAULT_VV_BALANCE) || 0.00;
       await db.collection('users').updateOne(
         { _id: user._id },
         { $set: { vv_balance: defaultBalance, updated_at: new Date() } }

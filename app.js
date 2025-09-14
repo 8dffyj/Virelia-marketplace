@@ -58,7 +58,7 @@ app.use(async (req, res, next) => {
       if (userData) {
         // Ensure user has VV balance
         if (userData.vv_balance === undefined || userData.vv_balance === null) {
-          const defaultBalance = parseInt(process.env.DEFAULT_VV_BALANCE) || 500;
+          const defaultBalance = parseInt(process.env.DEFAULT_VV_BALANCE) || 0.00;
           await db.collection('users').updateOne(
             { _id: userData._id },
             { $set: { vv_balance: defaultBalance, updated_at: new Date() } }
@@ -251,7 +251,7 @@ async function startServer() {
         discord_guild: !!process.env.DISCORD_GUILD_ID,
         discord_channels: !!(process.env.DISCORD_PURCHASE_CHANNEL_ID && process.env.DISCORD_EXPIRY_CHANNEL_ID),
         discord_status_updates: !!process.env.DISCORD_BOT_TOKEN,
-        default_balance: process.env.DEFAULT_VV_BALANCE || '500'
+        default_balance: process.env.DEFAULT_VV_BALANCE || '0.00'
       };
       
       console.log('[INFO] Configuration status:', configStatus);

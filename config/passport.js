@@ -33,7 +33,7 @@ passport.use(new DiscordStrategy({
     const existingUser = await db.collection('users').findOne({ _id: profile.id });
 
     // Parse default balance as decimal (supports both integer and decimal values)
-    const defaultBalance = parseFloat(process.env.DEFAULT_VV_BALANCE) || 500.0;
+    const defaultBalance = parseFloat(process.env.DEFAULT_VV_BALANCE) || 0.00;
     const now = new Date();
 
     let userData = {

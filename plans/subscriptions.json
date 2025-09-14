@@ -1,25 +1,5 @@
 [
   {
-    "id": "sub_1day",
-    "profile_image": "https://t3.ftcdn.net/jpg/00/89/85/08/360_F_89850844_YGSGp8OPRTpJsNyKOuQN1Fsl1zUlQpeo.jpg",
-    "title": "1 Day Access",
-    "description": "Enjoy premium features for 24 hours",
-    "price_vv": 0.23,
-    "discount": { "type": "percent", "value": 0 },
-    "days": 1,
-    "role_id": "1404725574341230683"
-  },
-  {
-    "id": "sub_7days",
-    "profile_image": "https://t3.ftcdn.net/jpg/00/89/85/08/240_F_89850878_58xuZjjqAIUBjdpqx0t2SbvNpDSWXE9S.jpg",
-    "title": "7-Day Pass",
-    "description": "1 week of premium access",
-    "price_vv": 0.65,
-    "discount": { "type": "percent", "value": 0 },
-    "days": 7,
-    "role_id": "1404725574341230683"
-  },
-  {
     "id": "sub_30days",
     "profile_image": "https://t4.ftcdn.net/jpg/10/55/35/77/240_F_1055357769_80MzIFcGxQI7cdlOmJt3V8a0ESGUoIyT.jpg",
     "title": "Monthly Plan",
