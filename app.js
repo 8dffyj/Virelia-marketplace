@@ -1,4 +1,3 @@
-// app.js (Updated with Discord status integration)
 const express = require("express");
 const session = require("express-session");
 const passport = require("./config/passport");
@@ -366,5 +365,6 @@ const protectSensitiveRoutes = (req, res, next) => {
   
   next();
 };
+
 
 app.use(protectSensitiveRoutes);
